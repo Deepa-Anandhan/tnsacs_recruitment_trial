@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Application Confirmation</title>
+    <style>
+        .download-button {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .download-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <p>Dear {{ applicant_name }},</p>
+    <br>
+    <p>Thank you for submitting your application for {{ job_title }}.</p>
+    <p>We're excited about the prospect of having you on TANSACS. Your unique Application ID is essential for tracking your progress throughout the hiring process.</p>
+    <br>
+    <p><strong>Application ID:</strong> {{ application_id }}</p>
+    <p>Keep this ID handy for future reference and inquiries.</p>
+    
+    <p>You can download your application as a PDF for your records by clicking the button below:</p>
+    <a href="http://127.0.0.1:8000/jobs/download/{{id}}" style={color:"white" ;font-size: 16px;} class="download-button">Download as PDF</a>
+    
+    <div>
+        Thanks,<br>
+        TANSACS <br>
+        <a href="http://www.tnsacs.in">www.tnsacs.in</a>
+    </div>
+</body>
+</html>

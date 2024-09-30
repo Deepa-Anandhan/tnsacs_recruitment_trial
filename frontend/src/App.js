@@ -1,0 +1,170 @@
+import './App.css';
+import { PersistGate } from 'redux-persist/integration/react';
+// import { persistStore } from 'redux-persist';
+
+// import DeputyDirectorForm from './components/user/deputydirectorform';
+// import StatePreventionOfficer from './components/user/statepreventionofficer';
+import ClinicalServiceOfficer from './components/user/ClinicalServiceOfficer';
+import DataMonitoringDocumentationOfficer from './components/user/datamonitor';
+import DeputyDirectorLS from './components/user/deputydirectorls';
+import AssistantDirectorBSD from './components/user/assistantdirectorbsd';
+import AssistantDirectorTI from './components/user/assistantdirectorti';
+import AssistantDirectorIEC from './components/user/assistantdirectoriec';
+// import ClusterPreventionOfficer from './components/user/clusterpreventionofficer';
+import ClusterManagerForm from './components/user/clustermanagerform';
+
+import SignIn from './components/user/signin';
+import Signup from './components/user/signup';
+import ForgotPassword from './components/user/forgot';
+import ResetPassword from './components/user/resetpassword';
+import VerifyOTP from './components/user/verify';
+
+import Instruction from './components/user/Instruction';
+import Jobs from './components/user/jobs';
+// import Job1 from './components/user/job1';
+import Job2 from './components/user/job2';
+import Job3 from './components/user/job3';
+import Job4 from './components/user/job4';
+// import Job5 from './components/user/job5';
+import Job6 from './components/user/job6';
+import Job7 from './components/user/job7';
+import Job8 from './components/user/job8';
+import Job9 from './components/user/job9';
+
+
+import AdminHome from './components/admin/home';
+
+// import Detail from './components/admin/detail';
+
+import Header from './components/basecomponents/header';
+import { Routes, Route } from 'react-router-dom'
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+import { Provider } from 'react-redux'
+import { store, persistor } from './redux/Store';
+import ValidaterLogin from './components/Validater/ValidaterLogin';
+import Preview from './components/admin/Preview';
+// import OTPVerificationModal from './components/basecomponents/otpField';
+
+import AdminCPM from './components/admin/AdminCPM';
+import AdminSPO from './components/admin/AdminSPO';
+import AdminCSO from './components/admin/AdminCSO';
+import AdminDMDO from './components/admin/AdminDMDO';
+import AdminDDLS from './components/admin/AdminDDLS';
+// import AdminCPO from './components/admin/AdminCPO';
+import AdminADIEC from './components/admin/AdminADIEC';
+import AdminADTI from './components/admin/AdminADTI';
+import AdminADICTC from './components/admin/AdminADICTC';
+import ServerError500 from './components/basecomponents/ServerError500';
+import PageNotFound from './components/basecomponents/PageNotFound';
+import "./css/main.css"
+const queryClient = new QueryClient()
+
+function App() {
+  return (
+
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <div className="App lg:px-20 md:px-20 px-5 py-10 font-roboto">
+            <Header />
+            {/* <DeputyDirectorForm/> */}
+
+            <Routes>
+
+
+
+              <Route path='/' element={<SignIn />} />
+              <Route path='/signup' element={<Signup />} />
+              <Route path='/forgot' element={<ForgotPassword />} />
+              <Route path='/reset' element={<ResetPassword />} />
+              <Route path='/verify' element={<VerifyOTP />} />
+
+
+              <Route path="/tansacs" element={<ValidaterLogin />}>
+
+                <Route path='instructions' element={<Instruction />} />
+
+                <Route path='jobs' element={<Jobs />} />
+                {/* <Route path='state_prevention_officer' element={<Job1 />} />
+                <Route path='state_prevention_officer/apply' element={<StatePreventionOfficer />} /> */}
+
+                <Route path='clinical_officer' element={<Job2 />} />
+                <Route path='clinical_officer/apply' element={<ClinicalServiceOfficer />} />
+
+                <Route path='data_monitoring_officer' element={<Job3 />} />
+                <Route path='data_monitoring_officer/apply' element={<DataMonitoringDocumentationOfficer />} />
+
+                <Route path='deputy_director_ls' element={<Job4 />} />
+                <Route path='deputy_director_ls/apply' element={<DeputyDirectorLS />} />
+
+                {/* <Route path='cluster_prevention_officer' element={<Job5 />} />
+                <Route path='cluster_prevention_officer/apply' element={<ClusterPreventionOfficer />} /> */}
+
+                <Route path='assistant_director_ictc' element={<Job6 />} />
+                <Route path='assistant_director_ictc/apply' element={<AssistantDirectorBSD />} />
+
+                <Route path='assistant_director_ti' element={<Job7 />} />
+                <Route path='assistant_director_ti/apply' element={<AssistantDirectorTI />} />
+
+                <Route path='assistant_director_iec' element={<Job8 />} />
+                <Route path='assistant_director_iec/apply' element={<AssistantDirectorIEC />} />
+
+                <Route path='cluster_manager' element={<Job9 />} />
+                <Route path='cluster_manager/apply' element={<ClusterManagerForm />} />
+
+              </Route>
+
+              <Route path='/admin'>
+                <Route path='home' element={<AdminHome />} />
+                {/* <Route path='home/SPO' element={<AdminSPO />} /> */}
+                <Route path='home/CPM' element={<AdminCPM />} />
+                <Route path='home/CSO' element={<AdminCSO />} />
+                <Route path='home/AD_IEC' element={<AdminADIEC />} />
+                <Route path='home/AD_TI' element={<AdminADTI />} />
+                <Route path='home/AD_ICTC' element={<AdminADICTC />} />
+                <Route path='home/DD_LS' element={<AdminDDLS />} />
+                {/* <Route path='home/CPO' element={<AdminCPO />} /> */}
+                <Route path='home/DMDO' element={<AdminDMDO />} />
+
+                <Route path='applicant/:userId' element={<Preview />} />
+              </Route>
+
+              <Route path='/server_error_500' element={<ServerError500 />} />
+              <Route path='*' element={<PageNotFound />} />
+
+
+
+              {/* <Route path='/admin/post' element={<Detail />} />
+              <Route path='/preview' element={<Preview/>} /> */}
+
+              {/* 
+              <Route path='/job1' element={<Job1 />} />
+              <Route path='/job2' element={<Job2 />} />
+              <Route path='/job3' element={<Job3 />} />
+              <Route path='/job4' element={<Job4 />} />
+              <Route path='/job5' element={<Job5 />} />
+              <Route path='/job6' element={<Job6 />} />
+              <Route path='/job7' element={<Job7 />} />
+              <Route path='/job8' element={<Job8 />} />
+
+              <Route path='/job1/apply' element={<StatePreventionOfficer />} />
+              <Route path="/job2/apply" element={<ClinicalServiceOfficer />} />
+              <Route path="/job3/apply" element={<DataMonitoringDocumentationOfficer />} />
+              <Route path="/job4/apply" element={<DeputyDirectorLS />} />
+              <Route path="/job5/apply" element={<DeputyDirectorSI />} />
+              <Route path="/job6/apply" element={<AssistantDirectorBSD />} />
+              <Route path="/job7/apply" element={<AssistantDirectorTI />} />
+              <Route path="/job8/apply" element={<AssistantDirectorIEC />} />
+
+              */}
+
+            </Routes>
+          </div>
+        </QueryClientProvider>
+      </PersistGate>
+    </Provider>
+  );
+}
+
+export default App;

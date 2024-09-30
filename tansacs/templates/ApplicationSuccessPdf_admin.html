@@ -1,0 +1,485 @@
+{% load static %}
+{% load custom_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Application Form</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+
+        body {
+            width: 170mm;
+            /* Adjust width to account for margins */
+            margin: 0 auto;
+            font-weight: bold;
+            /* ... other styles ... */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        tr {
+            border: 1px solid black;
+            padding: 3px;
+            page-break-inside: avoid;
+
+        }
+
+
+        td {
+            line-height: 1;
+            border: none;
+            font-size: 15px;
+
+
+        }
+
+        li {
+            border: none;
+            font-size: 15px;
+            margin-bottom: 10px;
+
+        }
+
+        .headers {
+            color: white;
+            margin: 10px 0;
+
+            background: #f40000;
+            padding: 5px;
+            font-size: 15px;
+
+        }
+
+        h1 {
+            text-align: center;
+            color: #f40000;
+            font-size: 25px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid black;
+        }
+
+        p {
+            line-height: 1;
+            font-size: 15px;
+
+
+        }
+
+        .declaration {
+            line-height: normal !important;
+        }
+
+        /* Force a new page after this section */
+        .new-page {
+            page-break-before: always;
+        }
+
+        /* Avoid page breaks within these sections */
+        .keep-together {
+            page-break-inside: avoid;
+        }
+
+        /* Avoid splitting elements if possible */
+        .avoid-split {
+            page-break-inside: avoid;
+            page-break-before: auto;
+            page-break-after: auto;
+        }
+
+
+        /* Adjust dynamically based on content length */
+        .dynamic-break {
+            page-break-before: auto;
+            page-break-after: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <table style="margin-bottom:0px" class="keep-together">
+        <tr style="border:none">
+            <td style="border:none ;text-align:center">
+                <img src="http://127.0.0.1:8000/static/images/Aids_s.png" alt="aids image" width="100px" height="100px" />
+            </td>
+            <td style="border:none ;text-align:center">
+                <img src="http://127.0.0.1:8000/static/images/Naco_s.png" alt="naco image" width="100px" height="100px"/>
+            </td>
+        </tr>
+    </table>
+
+    <h1 >Tamil Nadu State AIDS Control Society ( TANSACS )</h1>
+
+    <table style="margin-bottom:0px" class="keep-together">
+        <tr style="border:none;">
+
+            <td style="border:none;text-align:center">
+                <img src="http://127.0.0.1:8000{{ job.user.profile.profile_image.url }}" alt="profile image" width="100px" height="100px"/>
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Personal Details -->
+    <p class="headers" >PERSONAL DETAILS</p>
+
+
+
+    <table style="width:100%;" class="keep-together">
+
+        <tr>
+            <td>UNIQUE ID</td>
+            <td>{{job.application_id|upper}}</td>
+        </tr>
+        <tr>
+            <td>SCORE</td>
+            <td>{{job.mark|upper}}</td>
+        </tr>
+        <tr>
+            <td>SELECTED JOB POST</td>
+            <td>{{job.position|upper}}</td>
+        </tr>
+        <tr>
+            <td>APPLIED DATE</td>
+            <td>{{job.applied_date}}</td>
+        </tr>
+        <tr>
+            <td>NAME OF THE APPLICANT</td>
+            <td>{{job.user.profile.first_name|upper}} {{job.user.profile.last_name|upper}}</td>
+        </tr>
+
+
+        <tr>
+            <td>
+                APPLICANT MOBILE NUMBER
+
+            </td>
+            <td>
+                +91 {{job.user.profile.phone_number|upper}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                DATE OF BIRTH
+
+            </td>
+            <td>
+                {{job.user.profile.DOB|upper}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                AGE
+            </td>
+            <td>
+                {{job.user.profile.age|upper}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                EMAIL ID
+
+            </td>
+            <td>
+                {{job.user.profile.email}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                PARENT'S NAME
+
+            </td>
+            <td>
+                {{job.user.profile.guardian_name|upper}} {{job.user.profile.guardian_name_initial|upper}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                AADHAR CARD NUMBER
+
+            </td>
+            <td>
+                {{job.user.profile.aadhar|upper}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                EMERGENCY PHONE NUMBER
+
+            </td>
+            <td>
+                +91 {{job.user.profile.alternate_phone_number|upper}}
+            </td>
+        </tr>
+    </table>
+
+    <!-- Address Details -->
+    {% for each in job.user.profile.address.all %}
+    {% if each.address_type == "permanent" %}
+    <p class="headers">PERMANENT ADDRESS</p>
+    {% else %}
+    <p class="headers">COMMUNICATION ADDRESS</p>
+    {% endif %}
+    <table style="width:100%;" class="keep-together">
+        <tr>
+            <td>ADDRESS LINE 1</td>
+            <td>{{each.address_line1|upper}}</td>
+        </tr>
+        {% if each.address_line2 %}
+        <tr>
+            <td>ADDRESS LINE 2</td>
+            <td>{{each.address_line2|upper}}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>STATE</td>
+            <td>{{each.state|upper}}</td>
+        </tr>
+        <tr>
+            <td>DISTRICT</td>
+            <td>{{each.district|upper}}</td>
+        </tr>
+        <tr>
+            <td>PINCODE</td>
+            <td>{{each.pincode|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+    {% endfor %}
+
+    <!-- Education Details -->
+    <p class="headers new-page">EDUCATION DETAILS</p>
+
+
+    <p class="headers">S.S.L.C.</p>
+    <table style="width:100%;">
+        <tr>
+            <td>S.S.L.C. REGISTER NUMBER</td>
+            <td>{{job.sslc.register_number|upper}}</td>
+        </tr>
+        <tr>
+            <td>MONTH / YEAR OF PASSING</td>
+            <td>{{job.sslc.month|upper}} {{job.sslc.year|upper}}</td>
+        </tr>
+        <tr>
+            <td>TYPE OF BOARD</td>
+            <td>{{job.sslc.board|upper}}</td>
+        </tr>
+        <tr>
+            <td>PERCENTAGE</td>
+            <td>{{job.sslc.percentage|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+
+
+    <p class="headers">H.S.C.</p>
+    <table style="width:100%;">
+        <tr>
+            <td>H.S.C REGISTER NUMBER</td>
+            <td>{{job.hsc.register_number|upper}}</td>
+        </tr>
+        <tr>
+            <td>MONTH / YEAR OF PASSING</td>
+            <td>{{job.hsc.month|upper}} {{job.hsc.year|upper}}</td>
+        </tr>
+        <tr>
+            <td>TYPE OF BOARD</td>
+            <td>{{job.hsc.board|upper}}</td>
+        </tr>
+        <tr>
+            <td>PERCENTAGE</td>
+            <td>{{job.hsc.percentage|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+
+
+    <p class="headers">UNDERGRADUATE </p>
+    <table style="width:100%;">
+        <tr>
+            <td>U.G DEGREE</td>
+            <td>{{job.ug.degree|upper}}</td>
+        </tr>
+        <tr>
+            <td>DEPARTMENT</td>
+            <td>{{job.ug.department|upper}}</td>
+        </tr>
+        <tr>
+            <td>U.G REGISTER NUMBER</td>
+            <td>{{job.ug.register_number|upper}}</td>
+        </tr>
+        <tr>
+            <td>MONTH / YEAR OF PASSING</td>
+            <td>{{job.ug.month|upper}} {{job.ug.year|upper}}</td>
+        </tr>
+
+        <tr>
+            <td>PERCENTAGE</td>
+            <td>{{job.ug.percentage|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+
+    {% if job.pg.all %}
+    <p class="headers">POSTGRADUATE </p>
+    {% for each in job.pg.all %}
+
+    <table style="width:100%;">
+        <tr>
+            <td>P.G DEGREE</td>
+            <td>{{each.degree|upper}}</td>
+        </tr>
+
+        <tr>
+            <td>DEPARTMENT</td>
+            <td>{{each.department|upper}}</td>
+        </tr>
+
+        <tr>
+            <td>P.G REGISTER NUMBER</td>
+            <td>{{each.register_number|upper}}</td>
+        </tr>
+        <tr>
+            <td>MONTH / YEAR OF PASSING</td>
+            <td>{{each.month|upper}} {{each.year|upper}}</td>
+        </tr>
+
+        <tr>
+            <td>PERCENTAGE</td>
+            <td>{{each.percentage|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+    {% endfor %}
+    {% endif %}
+
+    <p class="new-page"></p>
+    {% if job.exp.all %}
+    <p class="headers">EXPERIENCE</p>
+    {% for each in job.exp.all %}
+
+    <table style="width:100%;">
+        <tr>
+            <td>DEGREE</td>
+            <td>{{each.degree|upper}}</td>
+        </tr>
+        <tr>
+            <td>COMPANY</td>
+            <td>{{each.company|upper}}</td>
+        </tr>
+
+
+        <tr>
+            <td>YEARS</td>
+            <td>{{each.year_month|upper}}</td>
+        </tr>
+
+        <!-- Add more rows as needed -->
+    </table>
+
+    {% endfor %}
+    {% endif %}
+
+    {% if job.pexp.all %}
+    <p class="headers">WORK EXPERIENCE WITH IN ( NACO / TANSACS )</p>
+
+    
+
+    <table style="width:100%;">
+        {% get_experience job as companies %}
+        {% for company, year in companies.items %}
+            {% if company != 'TSU' %}
+            <tr>
+                <td>EXPERIENCE in {{ company |upper}}</td>
+                <td>{{ year |upper}}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+    {% endif %}
+
+    <h4 style="color:red ; margin:0px ;font-size: 15px;"  >DECLARATION</h4>
+
+    <ul>
+        <li>
+            I hereby declare that all the particulars furnished in this application are true, correct
+            and complete to the best of my knowledge and belief. In the event of any information
+            being found false or incorrect or ineligibility being detected before or after the selection,
+            action can be taken against me by the TANSACS.
+        </li>
+        <li>
+            I further declare that I fulfill all the eligibility conditions prescribed for admission to this
+            post.
+        </li>
+        <li>
+            I have gone through the instructions etc., for this recruitment, before filling up the
+            application form through online mode.
+
+        </li>
+        <li>
+            I have informed my employer in writing that I am applying for this post and furnish the
+            NOC for this purpose (if applicable).
+        </li>
+        <li>
+            I am not a terminated employee.
+        </li>
+        <li>
+            There is no pending criminal case / Vigilance Case
+        </li>
+        <li>
+            I hereby declare that my character / antecedents are suitable for appointment to this
+            post.
+
+        </li>
+    </ul>
+
+    <p class="declaration">
+        I hereby declare that I have read all of the declaration clauses,
+        that all of the above contents are true to the best of my knowledge,
+        and that I have entered with full consciousness.
+    </p>
+
+    {% if job.signature %}
+
+    <table style="margin-bottom:0px">
+        <tr style="border:none;">
+
+            <td style="border:none;text-align:right">
+
+                <img src="http://127.0.0.1:8000{{ job.signature.url }}" alt="signature" width="150px" height="75px" style="padding:5px;border:1px solid black;"/>
+
+            </td>
+        </tr>
+    </table>
+
+    {% endif %}
+
+
+
+
+
+
+
+</body>
+
+</html>
